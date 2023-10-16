@@ -1,0 +1,25 @@
+name: Math Utility Repo applying CI # name tương đương consol.log ghi lại các nhật kí
+
+on:
+  push:
+    branches: [ "main" ]        #bất kì ai push code lên nhánh main  
+  pull_request:
+    branches: [ "main" ]
+
+jobs:                    #thì làm các lệnh ở dưới đây
+  build:                 #build app -> .jar . war bằng cách
+
+    runs-on: ubuntu-latest   # 1.mượn 1 sever bên mỹ cài sẵn dùm ubuntu
+
+    steps:
+    - uses: actions/checkout@v3 # 2. CÓ server rồi , tải code từ github về mấy
+    - name: Set up JDK 19       # 3. cho mượn cái JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '19'    #4. khai báo version jdk
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven  # 5. mượn maven chạy lệnh để biên dịch
+      run: mvn -B package --file pom.xml
+
+   
